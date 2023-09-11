@@ -16,23 +16,34 @@ class GradeCalculator:
     def calculate_remaining_required_for_a_grade(grades: Grades, weights:GradeWeights) -> float:
         """
         """
-        goal_grade = 90
+        goal_grade = .90
+        current_grade = 0.0
+        remaining_float = 1.0
 
-        if grades.quiz_1 is not None:
-            goal_grade -= (weights.quizzes * grades.quiz_1)
-        if grades.quiz_2 is not None:
-            goal_grade -= (weights.quizzes * grades.quiz_2)
+        if grades.quiz_1 is not None and grades.quiz_2 is not None:
+            current_grade += (grades.quiz_1 + grades.quiz_2)/2 * weights.quizzes
+            remaining_float -= weights.quizzes
+        elif grades.quiz_1 is not None:
+                current_grade += grades.quiz_1 * weights.quizzes
+                remaining_float -= weights.quizzes
+        elif grades.quiz_2 is not None:
+                current_grade += grades.quiz_2 * weights.quizzes
+                remaining_float -= weights.quizzes
+
         if grades.midterm is not None:
-            goal_grade -= (weights.midterm * grades.midterm)
+            current_grade += grades.midterm * weights.midterm
+            remaining_float -= weights.midterm
         if grades.project is not None:
-            goal_grade -= (weights.project * grades.project)
+            current_grade += grades.project * weights.project
+            remaining_float -= weights.project
         if grades.final is not None:
-            goal_grade -= (weights.final * grades.final)
+            current_grade += grades.final * weights.final
+            remaining_float -= weights.final
 
-        if goal_grade < 0:
+        if goal_grade - current_grade < 0:
             return 0
 
-        return goal_grade
+        return (goal_grade - current_grade) / remaining_float
 
     @staticmethod
     def calculate_course_percentage(grades:Grades, weights:GradeWeights) -> float:
