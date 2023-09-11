@@ -11,7 +11,47 @@ class GradeCalculator:
     """
     Calculates the overall course grade for ENPM611.
     """
-    
+
+    @staticmethod
+    def calculate_remaining_required_for_a_grade(grades: Grades, weights:GradeWeights) -> float:
+        """
+        """
+        goal_grade = 90
+        current_grade = 0
+        grade_map = Grades()
+
+        if grades.quiz_1 is not None:
+            current_grade += grades.quiz_1 * weights.quiz_1
+            grade_map.quiz_1 = 1
+        if grades.quiz_2 is not None:
+            current_grade += grades.quiz_2 * weights.quiz_2
+            grade_map.quiz_2 = 1
+        if grades.midterm is not None:
+            current_grade += grades.midterm * weights.midterm
+            grade_map.midterm = 1
+        if grades.project is not None:
+            current_grade += grades.project * weights.project
+            grade_map.project = 1
+        if grades.final is not None:
+            current_grade += grades.final * weights.final
+            grade_map.final = 1
+
+        if grade_map.quiz_1 is not None:
+            goal_grade -= (weights.quiz_1 * 100)
+        if grade_map.quiz_2 is not None:
+            goal_grade -= (weights.quiz_2 * 100)
+        if grade_map.midterm is not None:
+            goal_grade -= (weights.midterm * 100)
+        if grade_map.project is not None:
+            goal_grade -= (weights.project * 100)
+        if grade_map.final is not None:
+            goal_grade -= (weights.final * 100)
+
+        if goal_grade - current_grade < 0:
+            return 0
+
+        return goal_grade - current_grade
+
     @staticmethod
     def calculate_course_percentage(grades:Grades, weights:GradeWeights) -> float:
         """"
