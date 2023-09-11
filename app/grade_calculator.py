@@ -2,6 +2,7 @@
 # Python module for copying objects
 import copy
 
+
 # Importing application internal classes
 from grades import Grades
 from grade_weights import GradeWeights
