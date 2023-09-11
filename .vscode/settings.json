@@ -23,5 +23,8 @@
         "**/.env.dist": true,
         "**/*.log": true,
         "**/.0": true,
-    }
+    },
+    "python.analysis.extraPaths": [
+        "./app"
+    ]
 }
